@@ -1,7 +1,6 @@
-import { useState } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import "./App.css";
+import { useEffect, useState } from "react";
+// import "./App.css";
+import axios from "axios";
 
 type Fruit = {
   id: number;
@@ -13,8 +12,19 @@ function App() {
   const [fruits, setFruits] = useState<Fruit[]>([
     { id: 0, name: "", icon: "" },
   ]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await axios.get("http://localhost:8080");
+      console.log(data.data);
+      console.log(data.data[0]);
+      setFruits(data.data);
+    })();
+  }, []);
+
   return (
     <div>
+      <h1>hello</h1>
       {fruits.map((fruit) => (
         <p key={fruit.id}>
           <span>{fruit.name}</span>
